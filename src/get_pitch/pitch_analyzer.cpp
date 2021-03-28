@@ -6,12 +6,13 @@
 
 using namespace std;
 
-/// Name space of UPC
+/// Name space of Universitat Politècnica de Catalunya
 namespace upc {
   void PitchAnalyzer::autocorrelation(const vector<float> &x, vector<float> &r) const {
 
     for (unsigned int l = 0; l < r.size(); ++l) {
   		/// \TODO Compute the autocorrelation r[l]
+      /// \DONE Autocorrelation computed
     }
 
     if (r[0] == 0.0F) //to avoid log() and divide zero 
