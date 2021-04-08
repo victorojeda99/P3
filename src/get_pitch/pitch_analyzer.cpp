@@ -13,6 +13,10 @@ namespace upc {
     for (unsigned int l = 0; l < r.size(); ++l) {
   		/// \TODO Compute the autocorrelation r[l]
       /// \DONE Autocorrelation computed
+      r[l]=0;
+      for(unsigned int n=l;n<x.size(); n++){
+        r[l]+=x[n]*x[n-l];
+      }
     }
 
     if (r[0] == 0.0F) //to avoid log() and divide zero 
@@ -28,7 +32,8 @@ namespace upc {
     switch (win_type) {
     case HAMMING:
       /// \TODO Implement the Hamming window
-      break;
+
+      //break;
     case RECT:
     default:
       window.assign(frameLen, 1);
@@ -51,7 +56,7 @@ namespace upc {
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
-    return true;
+    return false;
   }
 
   float PitchAnalyzer::compute_pitch(vector<float> & x) const {
@@ -67,7 +72,7 @@ namespace upc {
     //Compute correlation
     autocorrelation(x, r);
 
-    vector<float>::const_iterator iR = r.begin(), iRMax = iR;
+    vector<float>::const_iterator iR = r.begin(), iRMax = iR + npitch_min;
 
     /// \TODO 
 	/// Find the lag of the maximum value of the autocorrelation away from the origin.<br>
@@ -76,6 +81,11 @@ namespace upc {
 	///    - The lag corresponding to the maximum value of the pitch.
     ///	   .
 	/// In either case, the lag should not exceed that of the minimum value of the pitch.
+  for(iR = r.begin() + npitch_min; iR < r.begin() + npitch_max; iR++){
+    if(*iR>*iRMax) {
+      iRMax = iR;
+    }
+  }
 
     unsigned int lag = iRMax - r.begin();
 
@@ -89,6 +99,9 @@ namespace upc {
       cout << pot << '\t' << r[1]/r[0] << '\t' << r[lag]/r[0] << endl;
 #endif
     
+    /*decidir si la trama es sonora o no:
+    lo ha
+    */
     if (unvoiced(pot, r[1]/r[0], r[lag]/r[0]))
       return 0;
     else
