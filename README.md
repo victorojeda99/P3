@@ -47,7 +47,7 @@ Ejercicios básicos
    <img src="/img/img2.png" width="300" align="center">
 
    Esto nos generó la siguiente gráfica:
-   <img src="/img/img3.png" width="1200" align="center">
+   <img src="/img/img3a.png" width="1200" align="center">
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
