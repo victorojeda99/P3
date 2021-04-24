@@ -33,7 +33,7 @@ Ejercicios básicos
   }
   ```
   La hemos calculado según la definición:
-  <img src="/Captura de Pantalla 2021-04-24 a les 12.31.02.png" width="1200" align="center">
+  <img src="/img/img1.png" width="1200" align="center">
 
 
    * Inserte una gŕafica donde, en un *subplot*, se vea con claridad la señal temporal de un segmento de
