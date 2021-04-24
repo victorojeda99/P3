@@ -49,10 +49,48 @@ Ejercicios básicos
    Esto nos generó la siguiente gráfica:
    <img src="/img/img3a.png" width="1200" align="center">
 
+  En la gráfica superior obtenemos el periodo de pitch:
+  T_pitch = 0.01394-0.006562 = 0.007378 = 7 ms
+
+  Por tanto el valor del pitch es:
+  pitch = 1/ T_pitch = 1/(7*10^-3) = 142.86 Hz
+
+  Podemos ver que este valor tiene sentido ya que lo ha grabado un chico y el valor de pitch para estos suele ser al rededor de 130 Hz (de media) en cambio en las mujeres es alrededor de 220 Hz.
+
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
 
+  Con el código siguiente, recorremos todos los valores para encontrar el primer máximo secundario de la correlacion. Después, dentro de el bucle, comprobamos si el valor almacenado es mayor al valor actual y si esto se cumple, guardamos la posición actual como máxima y calculamos la potencia de la señal.
+
+```cpp
+vector<float>::const_iterator iR = r.begin(), iRMax = iR + npitch_min;
+
+  for(iR = r.begin() + npitch_min; iR < r.begin() + npitch_max; iR++){
+    if(*iR>*iRMax) {
+      iRMax = iR;
+    }
+  }
+
+    unsigned int lag = iRMax - r.begin();
+
+    float pot = 10 * log10(r[0]);
+```
+
+  La potencia la calculamos sabiendo que la pótencia màxima coincide con la posición 0 de la autocorrelación.
+
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
+
+  Para determinar si un sonido es sonoro o sordo primeramente comprobamos la poténcia de la señal, ya que si el sonido es sonoro tendrá una potencia significativamente mayor a si es sordo. Por lo que identificamos que la función de autocorrelación tiene dos máximos superiores a unos umbrales predeterminados. Esto nos ayuda a encontrar el pitch ya que solo tiene sentido calcularlo en los tramos sonoros.
+
+```cpp
+  bool PitchAnalyzer::unvoiced(float pot, float r1norm, float rmaxnorm) const {
+    if ((rmaxnorm > UMBRAL_RMAXNORM || r1norm > UMBRAL_R1NORM) && pot > -UMBRAL_POT){
+      return false; //voice
+    }else{
+      return true;  //silence
+    }
+  }
+```
 
 - Una vez completados los puntos anteriores, dispondrá de una primera versión del detector de pitch. El 
   resto del trabajo consiste, básicamente, en obtener las mejores prestaciones posibles con él.
@@ -70,13 +108,27 @@ Ejercicios básicos
 	    Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que
 		en esta práctica es de 15 ms.
 
+    La gráfica que hemos obtenido con WaveSurfer es la siguiente
+    <img src="/img/img4.png" width="1200" align="center">
+
+    Las gráficas de la imagen superior están en el siguiente orden (de arriba a abajo): 1. Tasa de cruces por cero (ZCR) 2. El valor de la autocorrelación en su máximo secundario 3. Autocorrelación normalizada de uno 4. El nivel de potencia de la señal 5. Detector de Pitch 6. Waveform de la señal.
+
+    Vemos que detectamos bien el tramo sonoro y la detección del pitch es correcta.
+
       - Use el detector de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 	    su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
 		ilustrativa del resultado de ambos detectores.
   
+    La gráfica que hemos obtenido con WaveSurfer es la siguiente
+    <img src="/img/img5.png" width="1200" align="center">
+
+    Comparando las dos gráficas vemos que son bastante parecidas.
+
   * Optimice los parámetros de su sistema de detección de pitch e inserte una tabla con las tasas de error
     y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
 	`pitch_db/train`..
+
+  <img src="/img/img6.png" width="1200" align="center">
 
    * Inserte una gráfica en la que se vea con claridad el resultado de su detector de pitch junto al del
      detector de Wavesurfer. Aunque puede usarse Wavesurfer para obtener la representación, se valorará
