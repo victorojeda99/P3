@@ -33,7 +33,7 @@ Ejercicios básicos
   }
   ```
   La hemos calculado según la definición:
-  <img src="/img/img1.png" width="600" align="center">
+  <img src="/img/img1.png" width="300" align="center">
 
 
    * Inserte una gŕafica donde, en un *subplot*, se vea con claridad la señal temporal de un segmento de
@@ -42,6 +42,12 @@ Ejercicios básicos
 
 	 NOTA: es más que probable que tenga que usar Python, Octave/MATLAB u otro programa semejante para
 	 hacerlo. Se valorará la utilización de la librería matplotlib de Python.
+
+   Finalmente Hemos usado Matlab para generar la gráfica y lo hemos hecho con el siguiente código:
+   <img src="/img/img2.png" width="300" align="center">
+
+   Esto nos generó la siguiente gráfica:
+   <img src="/img/img3.png" width="1200" align="center">
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
