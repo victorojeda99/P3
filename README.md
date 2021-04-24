@@ -15,6 +15,27 @@ Ejercicios básicos
 
    * Complete el cálculo de la autocorrelación e inserte a continuación el código correspondiente.
 
+  La función de autocorrelación se define como la correlación cruzada de la señal consigo misma.
+
+  ```.sh
+  void PitchAnalyzer::autocorrelation(const vector<float> &x, vector<float> &r) const {
+
+    for (unsigned int l = 0; l < r.size(); ++l) {
+      r[l]=0;
+      for(unsigned int n=l;n<x.size(); n++){
+        r[l]+=x[n]*x[n-l];
+      }
+      r[l]=r[l]/x.size();
+    }
+
+    if (r[0] == 0.0F) //to avoid log() and divide zero 
+      r[0] = 1e-10; 
+  }
+  ```
+  La hemos calculado según la definición:
+  <img src="/Captura de Pantalla 2021-04-24 a les 12.31.02.png" width="1200" align="center">
+
+
    * Inserte una gŕafica donde, en un *subplot*, se vea con claridad la señal temporal de un segmento de
      unos 30 ms de un fonema sonoro y su periodo de pitch; y, en otro *subplot*, se vea con claridad la
 	 autocorrelación de la señal y la posición del primer máximo secundario.
