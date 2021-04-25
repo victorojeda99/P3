@@ -32,9 +32,9 @@ Ejercicios básicos
       r[0] = 1e-10; 
   }
   ```
+
   La hemos calculado según la definición:
   <img src="/img/img1.png" width="300" align="center">
-
 
    * Inserte una gŕafica donde, en un *subplot*, se vea con claridad la señal temporal de un segmento de
      unos 30 ms de un fonema sonoro y su periodo de pitch; y, en otro *subplot*, se vea con claridad la
@@ -76,7 +76,7 @@ Ejercicios básicos
       float pot = 10 * log10(r[0]);
   ```
 
-    La potencia la calculamos sabiendo que la pótencia màxima coincide con la posición 0 de la autocorrelación.
+  La potencia la calculamos sabiendo que la pótencia màxima coincide con la posición 0 de la autocorrelación.
 
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
 
@@ -115,12 +115,12 @@ Ejercicios básicos
 	    Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que
 		en esta práctica es de 15 ms.
 
-  La gráfica que hemos obtenido con WaveSurfer es la siguiente
+  La gráfica que hemos obtenido con WaveSurfer es la siguiente:
   <img src="/img/img4a.png" width="1200" align="center">
 
   Las gráficas de la imagen superior están en el siguiente orden (de arriba a abajo): 1. Tasa de cruces por cero (ZCR) 2. El valor de la autocorrelación en su máximo secundario 3. Autocorrelación normalizada de uno 4. El nivel de potencia de la señal 5. Detector de Pitch 6. Waveform de la señal.
   
-  Observamos que se ha detectado correctamente la sonoridad de la voz para todos los candidatos y la detección del pitch es correcta.
+  Observamos que se ha detectado correctamente la sonoridad de la voz para los candidatos y la detección del pitch es correcta.
 
       - Use el detector de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 	    su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
@@ -143,18 +143,15 @@ Ejercicios básicos
      detector de Wavesurfer. Aunque puede usarse Wavesurfer para obtener la representación, se valorará
 	 el uso de alternativas de mayor calidad (particularmente Python).
 
-  La siguiente captura se ha realizado con la señal "PAV_2301_01.wav".
+  La siguiente captura se ha realizado con la señal "PAV_2301_01.wav" que ya usamos en la práctica anterior.
   
   <img src="/img/img7a.png" width="1200" align="center">
   
-  Observamos que se ha detectado correctamente la sonoridad de la voz en todos los tramos que corresponde y la detección del
-  pitch es correcta.
-  Aún así, se obtendrían mejores resultados aplicando un método de preprocesado y postprocesado de la señal. El método de 
-  preprocesado de la señal más utilizado es el center-clipping, que consiste en recortar los picos de la señal, para 
-  disminuir los errores en la detección. El método más usado de postprocesado de la señal más utilizado es el aplicar un
-  filtro de mediana, para disminuir saltos en el pitch y errores en la detección, asignando a cada punto el valor de la mediana
-  local, por lo que solo cambian los valores que no corresponden a la mediana de la muestra.
-  Ambas técnicas de preprocesado y postprocesado las vamos a realizar en la ampliación de esta práctica.
+  Observamos que se ha detectado correctamente la sonoridad de la voz en todos los tramos que corresponde y la detección del pitch es correcta.
+
+  Aún así, se obtendrían mejores resultados aplicando un método de preprocesado y postprocesado de la señal. El método de preprocesado de la señal más utilizado es el center-clipping, que consiste en recortar los picos de la señal, para disminuir los errores en la detección. El método más usado de postprocesado de la señal más utilizado es el aplicar un filtro de mediana, para disminuir saltos en el pitch y errores en la detección, asignando a cada punto el valor de la mediana local, por lo que solo cambian los valores que no corresponden a la mediana de la muestra.
+
+  Ambas técnicas de preprocesado y postprocesado las vamos a implementar en la ampliación de esta práctica.
   
 
 Ejercicios de ampliación
@@ -175,9 +172,10 @@ Ejercicios de ampliación
   <img src="/img/img8.png" width="1200" align="center">
   
   Un ejemplo del uso es el siguiente:
+
   `scripts/run_get_pitch.sh 50.0 0.93 0.5`
-  En que los valores "50.0, 0.93, 0.5" son, correspondientemente, el umbral de potencia, n1norm, rmaxnorm. 
-  En el ejemplo hemos puesto los mismos umbrales escogidos anteriormente.
+
+  En que los valores "50.0, 0.93, 0.5" son el umbral de potencia, n1norm y rmaxnorm respectivamente y hemos usado los mismos umbrales escogidos anteriormente.
 
 - Implemente las técnicas que considere oportunas para optimizar las prestaciones del sistema de detección
   de pitch.
@@ -186,8 +184,9 @@ Ejercicios de ampliación
 
   * Técnicas de preprocesado: filtrado paso bajo, *center clipping*, etc.
 
-  El código es el siguiente: 
-  Hemos añadido la libreria <math.h>
+  El código es el siguiente:
+
+  Cabe destacar que hemos añadido la libreria <math.h>
 
   ```cpp
   float pow = 0;
@@ -242,8 +241,19 @@ Ejercicios de ampliación
   Observamos que el score obtenido es el mismo que en el caso anterior, aunque el MSE obtenido es mayor, por
   lo que aplicar este filtro mejora la detección del pitch.
   
-  Cabe destacar que hemos realizado una prueba aplicando un filtro de longitud 5 y el score obtenido empeora, 
-  dando un resultado de 90.36 %.
+  Cabe destacar que hemos realizado una prueba aplicando un filtro de longitud 5 y el score obtenido empeoraba significativamente, dando un resultado de 90.36 %.
+
+  Finalmente hemos generado las siguientes gráficas para comparar el efecto del preprocesado y del postprocesado que hemos implementado en dos señales. En ambas gráficas el orden es el siguiente (de arriba a abajo): 1. Detector de pitch de WaveSurfer 2. Detector de pitch básico 3. Detector de pitch ampliación 4. Waveform de la señal.
+
+  Para la señal "P3_a.wav":
+
+  <img src="/img/img11.png" width="1200" align="center">
+
+  Para la señal "PAV_2301_01.wav":
+
+  <img src="/img/img12.png" width="1200" align="center">
+
+  Vemos que los resultados en ambas gráficas con la ampliación suavizan el contorno de pitch y se eliminan algunos picos que aparecían en la primera versión.
 
   * Métodos alternativos a la autocorrelación: procesado cepstral, *average magnitude difference function*
     (AMDF), etc.
