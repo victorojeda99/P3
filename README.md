@@ -119,8 +119,8 @@ Ejercicios básicos
   <img src="/img/img4a.png" width="1200" align="center">
 
   Las gráficas de la imagen superior están en el siguiente orden (de arriba a abajo): 1. Tasa de cruces por cero (ZCR) 2. El valor de la autocorrelación en su máximo secundario 3. Autocorrelación normalizada de uno 4. El nivel de potencia de la señal 5. Detector de Pitch 6. Waveform de la señal.
-
-  Vemos que detectamos bien el tramo sonoro y la detección del pitch es correcta.
+  
+  Observamos que se ha detectado correctamente la sonoridad de la voz para todos los candidatos y la detección del pitch es correcta.
 
       - Use el detector de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 	    su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
@@ -137,12 +137,25 @@ Ejercicios básicos
 
   <img src="/img/img6a.png" width="1200" align="center">
 
+  Observamos que el score obtenido es de 90.68 %, es un resultado bastante bueno, ya que se encuentra por encima del 90 %.
+  
    * Inserte una gráfica en la que se vea con claridad el resultado de su detector de pitch junto al del
      detector de Wavesurfer. Aunque puede usarse Wavesurfer para obtener la representación, se valorará
 	 el uso de alternativas de mayor calidad (particularmente Python).
 
+  La siguiente captura se ha realizado con la señal "PAV_2301_01.wav".
+  
   <img src="/img/img7a.png" width="1200" align="center">
-   
+  
+  Observamos que se ha detectado correctamente la sonoridad de la voz en todos los tramos que corresponde y la detección del
+  pitch es correcta.
+  Aún así, se obtendrían mejores resultados aplicando un método de preprocesado y postprocesado de la señal. El método de 
+  preprocesado de la señal más utilizado es el center-clipping, que consiste en recortar los picos de la señal, para 
+  disminuir los errores en la detección. El método más usado de postprocesado de la señal más utilizado es el aplicar un
+  filtro de mediana, para disminuir saltos en el pitch y errores en la detección, asignando a cada punto el valor de la mediana
+  local, por lo que solo cambian los valores que no corresponden a la mediana de la muestra.
+  Ambas técnicas de preprocesado y postprocesado las vamos a realizar en la ampliación de esta práctica.
+  
 
 Ejercicios de ampliación
 ------------------------
@@ -157,7 +170,14 @@ Ejercicios de ampliación
   * Inserte un *pantallazo* en el que se vea el mensaje de ayuda del programa y un ejemplo de utilización
     con los argumentos añadidos.
 
+  El mensaje de ayuda es el siguiente:
+
   <img src="/img/img8.png" width="1200" align="center">
+  
+  Un ejemplo del uso es el siguiente:
+  `scripts/run_get_pitch.sh 50.0 0.93 0.5`
+  En que los valores "50.0, 0.93, 0.5" son, correspondientemente, el umbral de potencia, n1norm, rmaxnorm. 
+  En el ejemplo hemos puesto los mismos umbrales escogidos anteriormente.
 
 - Implemente las técnicas que considere oportunas para optimizar las prestaciones del sistema de detección
   de pitch.
@@ -167,7 +187,7 @@ Ejercicios de ampliación
   * Técnicas de preprocesado: filtrado paso bajo, *center clipping*, etc.
 
   El código es el siguiente: 
-  Hemos añadido la libreria math.h
+  Hemos añadido la libreria <math.h>
 
   ```cpp
   float pow = 0;
@@ -193,13 +213,16 @@ Ejercicios de ampliación
   }
   ```
 
+  El score obtenido es el siguiente:
+
   <img src="/img/img9a.png" width="1200" align="center">
 
+  Observamos que el score es de 90.79 %, por lo que añadir el central clipping ha mejorado
+  la obtención del pitch.
 
   * Técnicas de postprocesado: filtro de mediana, *dynamic time warping*, etc.
 
-  con 5 coefis 90.36 -> empeora
-  con 3 coefis mismo porcentaje pero mejoran los 2 primeros parametros y empeoran los otros dos
+  El código realizado es el siguiente, para un filtro de longitud 3:
   
   ```cpp
   vector<float> median_filter(3);
@@ -212,7 +235,15 @@ Ejercicios de ampliación
   }
   ```
 
+  El score obtenido es el siguiente:
+  
   <img src="/img/img10.png" width="1200" align="center">
+  
+  Observamos que el score obtenido es el mismo que en el caso anterior, aunque el MSE obtenido es mayor, por
+  lo que aplicar este filtro mejora la detección del pitch.
+  
+  Cabe destacar que hemos realizado una prueba aplicando un filtro de longitud 5 y el score obtenido empeora, 
+  dando un resultado de 90.36 %.
 
   * Métodos alternativos a la autocorrelación: procesado cepstral, *average magnitude difference function*
     (AMDF), etc.
