@@ -200,6 +200,7 @@ Ejercicios de ampliación
 
   con 5 coefis 90.36 -> empeora
   con 3 coefis mismo porcentaje pero mejoran los 2 primeros parametros y empeoran los otros dos
+  
   ```cpp
   vector<float> median_filter(3);
 
