@@ -97,7 +97,7 @@ Ejercicios básicos
   const float UMBRAL_RMAXNORM = 0.5F;
   const float UMBRAL_R1NORM = 0.93F;
   const float UMBRAL_POT = 50.0F;
-  ´´´ 
+  ``` 
 
 - Una vez completados los puntos anteriores, dispondrá de una primera versión del detector de pitch. El 
   resto del trabajo consiste, básicamente, en obtener las mejores prestaciones posibles con él.
@@ -165,7 +165,54 @@ Ejercicios de ampliación
   Entre las posibles mejoras, puede escoger una o más de las siguientes:
 
   * Técnicas de preprocesado: filtrado paso bajo, *center clipping*, etc.
+
+  El código es el siguiente: 
+  Hemos añadido la libreria math.h
+
+  ```cpp
+  float pow = 0;
+  for (unsigned int i = 0; i < x.size(); i++)
+  {
+    pow += x[i]*x[i];
+  }
+  pow /= x.size();
+
+  float umbral_clipping = 0.75 * pow;
+
+  for (unsigned int i = 0; i < x.size(); i++)
+  {
+    if (x[i] >= umbral_clipping)
+    {
+      x[i] -= umbral_clipping;
+    }else if (abs(x[i]) < umbral_clipping)
+    {
+      x[i]=0;
+    }else{
+      x[i] += umbral_clipping;
+    }
+  }
+  ```
+
+  <img src="/img/img9a.png" width="1200" align="center">
+
+
   * Técnicas de postprocesado: filtro de mediana, *dynamic time warping*, etc.
+
+  con 5 coefis 90.36 -> empeora
+  con 3 coefis mismo porcentaje pero mejoran los 2 primeros parametros y empeoran los otros dos
+  ```cpp
+  vector<float> median_filter(3);
+
+  for (unsigned int i = 2; i < f0.size(); i++)
+  {
+    median_filter = {f0[i-1],f0[i],f0[i+1]};
+    sort(median_filter.begin(), median_filter.end());
+    f0[i] = median_filter[1];
+  }
+  ```
+
+  <img src="/img/img10.png" width="1200" align="center">
+
   * Métodos alternativos a la autocorrelación: procesado cepstral, *average magnitude difference function*
     (AMDF), etc.
   * Optimización **demostrable** de los parámetros que gobiernan el detector, en concreto, de los que
