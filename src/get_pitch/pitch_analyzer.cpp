@@ -4,8 +4,8 @@
 #include <math.h>
 #include "pitch_analyzer.h"
 const float UMBRAL_RMAXNORM = 0.5F;  //modificar
-const float UMBRAL_R1NORM = 0.92F;
-const float UMBRAL_POT = 48.0F;
+const float UMBRAL_R1NORM = 0.93F;
+const float UMBRAL_POT = 50.0F;
 using namespace std;
 
 /// Name space of Universitat Politècnica de Catalunya

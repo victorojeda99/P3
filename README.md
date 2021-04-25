@@ -92,6 +92,13 @@ Ejercicios básicos
   }
   ```
 
+  Usando los siguientes umbrales:
+  ```cpp
+  const float UMBRAL_RMAXNORM = 0.5F;
+  const float UMBRAL_R1NORM = 0.93F;
+  const float UMBRAL_POT = 50.0F;
+  ´´´ 
+
 - Una vez completados los puntos anteriores, dispondrá de una primera versión del detector de pitch. El 
   resto del trabajo consiste, básicamente, en obtener las mejores prestaciones posibles con él.
 
@@ -109,7 +116,7 @@ Ejercicios básicos
 		en esta práctica es de 15 ms.
 
   La gráfica que hemos obtenido con WaveSurfer es la siguiente
-  <img src="/img/img4.png" width="1200" align="center">
+  <img src="/img/img4a.png" width="1200" align="center">
 
   Las gráficas de la imagen superior están en el siguiente orden (de arriba a abajo): 1. Tasa de cruces por cero (ZCR) 2. El valor de la autocorrelación en su máximo secundario 3. Autocorrelación normalizada de uno 4. El nivel de potencia de la señal 5. Detector de Pitch 6. Waveform de la señal.
 
@@ -120,7 +127,7 @@ Ejercicios básicos
 		ilustrativa del resultado de ambos detectores.
   
   La gráfica que hemos obtenido con WaveSurfer es la siguiente
-  <img src="/img/img5.png" width="1200" align="center">
+  <img src="/img/img5a.png" width="1200" align="center">
 
   Comparando las dos gráficas vemos que son bastante parecidas.
 
@@ -128,11 +135,13 @@ Ejercicios básicos
     y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
 	`pitch_db/train`..
 
-  <img src="/img/img6.png" width="1200" align="center">
+  <img src="/img/img6a.png" width="1200" align="center">
 
    * Inserte una gráfica en la que se vea con claridad el resultado de su detector de pitch junto al del
      detector de Wavesurfer. Aunque puede usarse Wavesurfer para obtener la representación, se valorará
 	 el uso de alternativas de mayor calidad (particularmente Python).
+
+  <img src="/img/img7a.png" width="1200" align="center">
    
 
 Ejercicios de ampliación
@@ -147,6 +156,8 @@ Ejercicios de ampliación
 
   * Inserte un *pantallazo* en el que se vea el mensaje de ayuda del programa y un ejemplo de utilización
     con los argumentos añadidos.
+
+  <img src="/img/img8.png" width="1200" align="center">
 
 - Implemente las técnicas que considere oportunas para optimizar las prestaciones del sistema de detección
   de pitch.
